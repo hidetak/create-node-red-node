@@ -1,0 +1,62 @@
+{
+    "packageName": "node-red-contrib-test01-node",
+    "nodeType": "test01-node",
+    "nodeName": "Test01Name",
+    "category": "test",
+    "color": "#d7d7a0",
+    "icon": "arrow.png",
+    "paletteLabel__enUS":"test01 node",
+    "paletteLabel__ja":"テスト01ノード",
+    "labelStyle":"node_label_italic",
+    "input":{
+        "tabLabel__ja":"入力1",
+        "params":[
+            {
+                "name":"inputParam1",
+                "label__ja":"入力パラメータ1",
+                "description__ja":"入力パラメータ1の説明",
+                "placeholder__ja":"入力パラメータ1",
+                "types":["str", "env", "msg"],
+                "defaultType":"msg",
+                "defaultValue":"payload",
+                "required":true
+            }
+        ]
+    },
+    "outputs":[
+        {
+            "tabLabel__ja":"出力1",
+            "outputLabel__ja":"出力1",
+            "params":[
+                {
+                    "name":"output1",
+                    "label__ja":"_output1",
+                    "description__ja":"_output1Description",
+                    "placeholder__ja":"placeholder ",
+                    "types":["msg", "flow"],
+                    "defaultType":"msg",
+                    "defaultValue":"payload"
+                }
+            ]
+        }
+    ],
+    "config":{
+        "nodeType":"test01-config",
+        "nodeName":"Test01Config",
+        "defaultName":"test01config",
+        "configLabel__ja":"テスト01設定",
+        "labelStyle":"node_label_italic",
+        "settings":[
+            {
+                "name":"config1",
+                "label__ja":"設定1",
+                "description__ja":"_config1Description",
+                "types":["str", "env", "flow"],
+                "defaultType":"env",
+                "defaultValue":"testenv",
+                "placeholder__ja":"testph",
+                "required": true
+            }
+        ]
+    }
+}

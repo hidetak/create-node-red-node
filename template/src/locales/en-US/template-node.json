@@ -1,0 +1,36 @@
+{
+    "editor": {
+        "nameLabel": "Name",
+        <%_ if(config) { _%>
+        "configLabel": "<%- config.configLabel__enUS %>",
+        <%_ } _%>
+        "paletteLabel": "<%- paletteLabel__enUS %>",
+        <%_ if(input) { _%>
+        "inParams": {
+            "tabLabel":"<%- input.tabLabel__enUS %>",
+            <%_ for(let i = 0; i < input.params.length; i++) { _%>
+            "<%- input.params[i].name %>":{
+                "label":"<%- input.params[i].label__enUS %>",
+                "description":"<%- input.params[i].description__enUS %>",
+                "placeholder":"<%- input.params[i].placeholder__enUS %>"
+            }<%- i < input.params.length - 1 ? "," : "" %>
+            <%_ } _%>
+        }<%- outputs && outputs.length > 0 ? "," : "" %>
+        <%_ } _%>
+        <%_ if(outputs) { _%>
+        <%_   for( let j = 0; j < outputs.length; j++) { _%>
+        "outParams<%- j+1 %>": {
+            "tabLabel":"<%- outputs[j].tabLabel__enUS %>",
+            "outputLabel":"<%- outputs[j].outputLabel__enUS %>",
+            <%_ for( let i = 0; i < outputs[j].params.length; i++) { _%>
+            "<%- outputs[j].params[i].name %>":{
+                "label":"<%- outputs[j].params[i].label__enUS %>",
+                "description":"<%- outputs[j].params[i].description__enUS %>",
+                "placeholder":"<%- outputs[j].params[i].placeholder__enUS %>"
+            }<%- i < outputs[j].params.length - 1 ? "," : "" %>
+            <%_ } _%>
+        }<%- j < outputs.length - 1 ? "," : "" %>
+        <%_   } _%>
+        <%_ } _%>
+    }
+}

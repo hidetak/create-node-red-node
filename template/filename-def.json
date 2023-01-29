@@ -1,0 +1,14 @@
+{
+    "src/template-node.html": "src/<%- nodeType %>.html",
+    "src/template-node.ts": "src/<%- nodeType %>.ts",
+    "src/template-config.html": "src/<%- config.nodeType %>.html",
+    "src/template-config.ts": "src/<%- config.nodeType %>.ts",
+    "src/locales/en-US/template-config.json": "src/locales/en-US/<%- config.nodeType %>.json",
+    "src/locales/en-US/template-node.json": "src/locales/en-US/<%- nodeType %>.json",
+    "src/locales/en-US/template-config.html": "src/locales/en-US/<%- config.nodeType %>.html",
+    "src/locales/en-US/template-node.html": "src/locales/en-US/<%- nodeType %>.html",
+    "src/locales/ja/template-config.json": "src/locales/ja/<%- config.nodeType %>.json",
+    "src/locales/ja/template-node.json": "src/locales/ja/<%- nodeType %>.json",
+    "src/locales/ja/template-config.html": "src/locales/ja/<%- config.nodeType %>.html",
+    "src/locales/ja/template-node.html": "src/locales/ja/<%- nodeType %>.html"
+ }

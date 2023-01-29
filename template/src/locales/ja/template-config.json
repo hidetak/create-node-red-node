@@ -1,0 +1,16 @@
+{
+    "editor": {
+        "nameLabel": "名前",
+        <%_ if(config) { _%>
+        "configLabel": "<%- config.configLabel__ja %>",
+        <%_   for(let i = 0; i < config.settings.length; i++) { _%>
+        "<%- config.settings[i].name %>":{
+            "label":"<%- config.settings[i].label__ja %>",
+            "description":"<%- config.settings[i].description__ja %>",
+            "placeholder":"<%- config.settings[i].placeholder__ja %>"
+        }<%- i < config.settings.length - 1 ? "," : "" %>
+        <%_   } _%>
+        <%_ } _%>
+    }
+}
+
