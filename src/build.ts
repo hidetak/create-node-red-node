@@ -1,7 +1,7 @@
 import ejs from "ejs";
 import fs from "fs";
 
-const compile = async (
+export const compile = async (
   templateDirName: string,
   outputDirName: string,
   data: object
@@ -38,7 +38,7 @@ const makeDir = async (path: string) => {
   });
 };
 
-const rename = (outputDirName, defFileName) => {
+export const rename = (outputDirName, defFileName) => {
   const defStr = fs.readFileSync(`${outputDirName}/${defFileName}`, "utf8");
   const def = JSON.parse(defStr);
   for (const beforePath in def) {
@@ -55,25 +55,3 @@ const rename = (outputDirName, defFileName) => {
     }
   }
 };
-
-const main = async () => {
-  const templateDirName = process.argv[2];
-  const outputDirName = process.argv[3];
-  const dataFileName = process.argv[4];
-
-  if (!fs.statSync(templateDirName).isDirectory()) {
-    console.error("error: wrong template dir");
-    process.exit();
-  }
-  const dataStr = fs.readFileSync(dataFileName, "utf8");
-  const data = JSON.parse(dataStr);
-  try {
-    await compile(templateDirName, outputDirName, data);
-    rename(outputDirName, `filename-def.json`);
-  } catch (err) {
-    console.error(err);
-    process.exit();
-  }
-};
-
-main();

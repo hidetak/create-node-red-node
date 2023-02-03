@@ -2,10 +2,13 @@
   "name": "create-node-red-node",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "bin": {
+    "create-node-red-node": "dist/index.js"
+  },
   "scripts": {
     "build": "tsc",
-    "build:node": "tsc && node dist/build template/ out-node/ node-gen-config.json",
+    "build:node": "tsc && node dist/index out-node/ node-gen-config.json template/",
     "deprecated_build:node": "ejs-cli --base-dir template/ '**/*.*' --out out-node/ -O node-gen-config.json"
   },
   "author": "hidetak",
