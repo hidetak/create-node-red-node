@@ -43,7 +43,7 @@
             credentials: {
                 <%_ if(input && input.params) { _%>
                 <%_   for(const param of input.params) { _%>
-                inParams_<%- param.name %>: {type: "text"}
+                inParams_<%- param.name %>: {type: "text"},
                 <%_   } _%>
                 <%_ } _%>
             },

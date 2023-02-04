@@ -1,6 +1,6 @@
 {
-  "name": "create-node-red-node",
-  "version": "0.0.1",
+  "name": "@hidetak/create-node-red-node",
+  "version": "0.0.1-beta.1",
   "description": "",
   "main": "dist/index.js",
   "bin": {

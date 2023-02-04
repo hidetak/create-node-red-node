@@ -17,8 +17,8 @@ module.exports = function (RED) {
 
   RED.nodes.registerType("<%- config.nodeType %>", <%- config.nodeName %>, {
     credentials: {
-      <%_ for(const setting of config.settings) { _%>
-      <%- setting.name %>: { type: 'text' }
+      <%_ for(let i = 0; i < config.settings.length; i++) { _%>
+      <%- config.settings[i].name %>: { type: 'text' }<%- i < config.settings.length - 1 ? "," : "" %>
       <%_ } _%>
     }
   })

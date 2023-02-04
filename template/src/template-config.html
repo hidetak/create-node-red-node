@@ -6,12 +6,12 @@
                 name: { value: '<%- config.defaultName %>' },
                 <%_ for(const setting of config.settings) { _%>
                 <%- setting.name %>Type: {value:'<%- setting.defaultType %>'},
-                <%- setting.name %>ConstValue: {value:'<%- setting.defaultValue %>'}
+                <%- setting.name %>ConstValue: {value:'<%- setting.defaultValue %>'},
                 <%_ } _%>
             },
             credentials: {
                 <%_ for(const setting of config.settings) { _%>
-                <%- setting.name %>: { type: 'text' }
+                <%- setting.name %>: { type: 'text' },
                 <%_ } _%>
             },
             label: function () {

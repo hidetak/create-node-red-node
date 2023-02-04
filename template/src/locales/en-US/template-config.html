@@ -1,0 +1,21 @@
+<script type="text/html" data-help-name="<%- config.nodeType %>">
+    <p>[<%- config.nodeName %> description.]</p>
+
+    <h3>Inputs</h3>
+        <dl class="message-properties">
+            <%_ for(const setting of config.settings) { _%>
+            <dt><%- setting.name %>
+            <span class="property-type">[property type(ex: string | buffer)]</span>
+            </dt>
+            <dd><%- setting.description__enUS %></dd>
+            <%_ } _%>
+        </dl>
+    
+    <h3>Details</h3>
+        <p>[detail description.]</p>
+    
+    <h3>References</h3>
+    <ul>
+        <li>[reference information]</li>
+    </ul>
+</script>

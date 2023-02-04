@@ -11,7 +11,7 @@ module.exports = function (RED) {
     node.on('input', async (msg, send, done) => {
       // configノードを取得
       const <%- varConfigNodeName %> = RED.nodes.getNode(config.<%- varConfigNodeName %>)
-      // 入力パラメータ
+      // 入力パラメータを取得
       <%_ if(input && input.params) { _%>
       <%_   for(const param of input.params) { _%>
       node.inParams_<%- param.name %> = node.credentials.inParams_<%- param.name %>
@@ -23,24 +23,36 @@ module.exports = function (RED) {
           msg
         )
       }
-      console.log('<%- varConfigNodeName %>:', <%- varConfigNodeName %>)
-      console.log(
-        'config.inParams_inputParam1Type',
-        config.inParams_<%- param.name %>Type
-      )
-      console.log(
-        'node.credentials.inParams_<%- param.name %>',
-        node.credentials.inParams_<%- param.name %>
-      )
-      console.log(
-        'config.inParams_<%- param.name %>ConstValue',
-        config.inParams_<%- param.name %>ConstValue
-      )
       console.log('node.inParams_<%- param.name %>:', node.inParams_<%- param.name %>)
       <%_   } _%>
       <%_ } _%>
 
-      send(msg) // Outputが複数の場合は配列で返す
+      // 出力の作成
+      <%_ if(outputs && outputs.length > 1) { _%>
+      let msgs = []
+      <%_ } _%>
+      <%_ for( let j = 0; j < outputs.length; j++) { _%>
+      // <%- outputs[j].outputLabel__ja %>の出力を返す場合
+      <%_   for( let i = 0; i < outputs[j].params.length; i++) { _%>
+      setOutput(
+        config.outParams<%- j+1 %>_<%- outputs[j].params[i].name %>Type,
+        node.outParams<%- j+1 %>_<%- outputs[j].params[i].name %>,
+        msg,
+        this.context(),
+        '[value of <%- outputs[j].params[i].name %>]'
+      )
+      <%_   } _%>
+      <%_ if(outputs && outputs.length > 1) { _%>
+      msgs[<%- j %>] = msg
+      <%_ } _%>
+      // ここまで
+      <%_ } _%>
+
+      <%_ if(outputs && outputs.length > 1) { _%>
+      send(msgs) // Outputが複数の場合は配列で返す
+      <%_ } else { _%>
+      send(msg)
+      <%_ } _%>
       done()
     })
     // closeイベント
@@ -59,4 +71,27 @@ module.exports = function (RED) {
       inParams_inputParam1: { type: 'text' }
     }
   })
+
+  const setOutput = (type, valueName, msg, context, value) => {
+    if (type === 'msg') {
+      const names = valueName.split('.')
+      let target = msg
+      for (let i = 0; i < names.length - 1; i++) {
+        let n = names[i]
+        if (target[n] && target[n] instanceof Object) {
+          target = target[n]
+        } else {
+          target[n] = {}
+          target = target[n]
+        }
+      }
+      target[names[names.length - 1]] = value
+    } else if (type === 'node') {
+      context.set(valueName, value)
+    } else if (type === 'flow') {
+      context.flow.set(valueName, value)
+    } else if (type === 'global') {
+      context.global.set(valueName, value)
+    }
+  }
 }
