@@ -36,10 +36,10 @@ module.exports = function (RED) {
       <%_   for( let i = 0; i < outputs[j].params.length; i++) { _%>
       setOutput(
         config.outParams<%- j+1 %>_<%- outputs[j].params[i].name %>Type,
-        node.outParams<%- j+1 %>_<%- outputs[j].params[i].name %>,
+        config.outParams<%- j+1 %>_<%- outputs[j].params[i].name %>ConstValue,
         msg,
         this.context(),
-        '[value of <%- outputs[j].params[i].name %>]'
+        '[value of outParams<%- j+1 %>_<%- outputs[j].params[i].name %>]'
       )
       <%_   } _%>
       <%_ if(outputs && outputs.length > 1) { _%>
