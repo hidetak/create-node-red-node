@@ -4,10 +4,11 @@
   "description": "",
   "main": "dist/index.js",
   "bin": {
-    "create-node-red-node": "dist/index.js"
+    "create-node-red-node": "bin/index.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && npm run copy:dist2bin",
+    "copy:dist2bin": "node -e \"require('fs-extra').copySync('./dist', './bin')\"",
     "build:node": "tsc && node dist/index out-node/ node-gen-config.json template/",
     "deprecated_build:node": "ejs-cli --base-dir template/ '**/*.*' --out out-node/ -O node-gen-config.json"
   },
@@ -17,7 +18,8 @@
     "@types/ejs": "^3.1.1",
     "@types/node": "^18.11.18",
     "ejs-cli": "^2.2.3",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "fs-extra": "^10.1.0"
   },
   "dependencies": {
     "ejs": "^3.1.8"
