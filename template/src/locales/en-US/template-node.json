@@ -4,10 +4,10 @@
         <%_ if(config) { _%>
         "configLabel": "<%- config.configLabel__enUS %>",
         <%_ } _%>
-        "paletteLabel": "<%- paletteLabel__enUS %>",
+        "paletteLabel": "<%- paletteLabel__enUS %>"<%- input || (outputs && outputs.length > 0) ? "," : "" %>
         <%_ if(input) { _%>
         "inParams": {
-            "tabLabel":"<%- input.tabLabel__enUS %>",
+            "tabLabel":"<%- input.tabLabel__enUS %>"<%- input.params.length > 0 ? "," : "" %>
             <%_ for(let i = 0; i < input.params.length; i++) { _%>
             "<%- input.params[i].name %>":{
                 "label":"<%- input.params[i].label__enUS %>",
@@ -21,7 +21,7 @@
         <%_   for( let j = 0; j < outputs.length; j++) { _%>
         "outParams<%- j+1 %>": {
             "tabLabel":"<%- outputs[j].tabLabel__enUS %>",
-            "outputLabel":"<%- outputs[j].outputLabel__enUS %>",
+            "outputLabel":"<%- outputs[j].outputLabel__enUS %>"<%- outputs[j].params.length > 0 ? "," : "" %>
             <%_ for( let i = 0; i < outputs[j].params.length; i++) { _%>
             "<%- outputs[j].params[i].name %>":{
                 "label":"<%- outputs[j].params[i].label__enUS %>",

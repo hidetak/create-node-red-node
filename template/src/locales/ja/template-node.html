@@ -3,17 +3,20 @@
 
     <h3>Inputs</h3>
         <dl class="message-properties">
-            <%_ for(const param of input.params) { _%>
+            <%_ if(input) { _%>
+            <%_   for(const param of input.params) { _%>
             <dt><%- param.name %>
             <span class="property-type">[property type(ex: string | buffer)]</span>
             </dt>
             <dd><%- param.description__ja %></dd>
+            <%_   } _%>
             <%_ } _%>
         </dl>
     
     <h3>Outputs</h3>
         <ol class="node-ports">
-            <%_ for(let i = 0; i < outputs.length; i++) { _%>
+            <%_ if(outputs) { _%>
+            <%_   for(let i = 0; i < outputs.length; i++) { _%>
             <li><%- outputs[i].outputLabel__ja %>
                 <%_ for(const param of outputs[i].params) { _%>
                 <dl class="message-properties">
@@ -22,6 +25,7 @@
                 </dl>
                 <%_ } _%>
             </li>
+            <%_   } _%>
             <%_ } _%>
             <li>[Error]
                 <dl class="message-properties">

@@ -1,16 +1,15 @@
+<%_ if(config) { _%>
 {
     "editor": {
         "nameLabel": "Name",
-        <%_ if(config) { _%>
-        "configLabel": "<%- config.configLabel__enUS %>",
-        <%_   for(let i = 0; i < config.settings.length; i++) { _%>
+        "configLabel": "<%- config.configLabel__enUS %>"<%- config.settings.length > 0 ? "," : "" %>
+        <%_ for(let i = 0; i < config.settings.length; i++) { _%>
         "<%- config.settings[i].name %>":{
             "label":"<%- config.settings[i].label__enUS %>",
             "description":"<%- config.settings[i].description__enUS %>",
             "placeholder":"<%- config.settings[i].placeholder__enUS %>"
         }<%- i < config.settings.length - 1 ? "," : "" %>
-        <%_   } _%>
         <%_ } _%>
     }
 }
-
+<%_ } _%>

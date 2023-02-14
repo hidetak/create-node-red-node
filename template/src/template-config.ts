@@ -1,3 +1,4 @@
+<%_ if(config) { _%>
 module.exports = function (RED) {
   function <%- config.nodeName %>(config) {
     RED.nodes.createNode(this, config)
@@ -23,3 +24,4 @@ module.exports = function (RED) {
     }
   })
 }
+<%_ } _%>

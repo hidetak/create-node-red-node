@@ -43,13 +43,18 @@ export const rename = (outputDirName, defFileName) => {
   const def = JSON.parse(defStr);
   for (const beforePath in def) {
     if (fs.existsSync(`${outputDirName}/${beforePath}`)) {
-      fs.renameSync(
-        `${outputDirName}/${beforePath}`,
-        `${outputDirName}/${def[beforePath]}`
-      );
-      console.log(
-        `rename ${outputDirName}/${beforePath} => ${outputDirName}/${def[beforePath]}`
-      );
+      if (def[beforePath] === "remove") {
+        fs.unlinkSync(`${outputDirName}/${beforePath}`);
+        console.log(`remove ${outputDirName}/${beforePath}`);
+      } else {
+        fs.renameSync(
+          `${outputDirName}/${beforePath}`,
+          `${outputDirName}/${def[beforePath]}`
+        );
+        console.log(
+          `rename ${outputDirName}/${beforePath} => ${outputDirName}/${def[beforePath]}`
+        );
+      }
     } else {
       console.log(`skip ${outputDirName}/${beforePath}`);
     }

@@ -9,8 +9,10 @@ module.exports = function (RED) {
 
     // inputイベント
     node.on('input', async (msg, send, done) => {
+      <%_ if(config) { _%>
       // configノードを取得
       const <%- varConfigNodeName %> = RED.nodes.getNode(config.<%- varConfigNodeName %>)
+      <%_ } _%>
       // 入力パラメータを取得
       <%_ if(input && input.params) { _%>
       <%_   for(const param of input.params) { _%>
@@ -31,9 +33,10 @@ module.exports = function (RED) {
       <%_ if(outputs && outputs.length > 1) { _%>
       let msgs = []
       <%_ } _%>
-      <%_ for( let j = 0; j < outputs.length; j++) { _%>
+      <%_ if(outputs) { _%>
+      <%_   for( let j = 0; j < outputs.length; j++) { _%>
       // <%- outputs[j].outputLabel__ja %>の出力を返す場合
-      <%_   for( let i = 0; i < outputs[j].params.length; i++) { _%>
+      <%_     for( let i = 0; i < outputs[j].params.length; i++) { _%>
       setOutput(
         config.outParams<%- j+1 %>_<%- outputs[j].params[i].name %>Type,
         config.outParams<%- j+1 %>_<%- outputs[j].params[i].name %>ConstValue,
@@ -41,11 +44,12 @@ module.exports = function (RED) {
         this.context(),
         '[value of outParams<%- j+1 %>_<%- outputs[j].params[i].name %>]'
       )
-      <%_   } _%>
+      <%_     } _%>
       <%_ if(outputs && outputs.length > 1) { _%>
       msgs[<%- j %>] = msg
       <%_ } _%>
       // ここまで
+      <%_   } _%>
       <%_ } _%>
 
       <%_ if(outputs && outputs.length > 1) { _%>
