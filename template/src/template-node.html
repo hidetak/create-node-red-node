@@ -49,14 +49,14 @@
             },
             inputs:<%- input ? 1 : 0 %>,
             outputs:<%- outputs ? outputs.length : 0 %>,
-            outputLabels: function() {
+            outputLabels: function(index) {
                 return [
                     <%_ if(outputs) { _%>
                     <%_   for( let j = 0; j < outputs.length; j++) { _%>
                     this._("editor.outParams<%- j+1 %>.outputLabel")<%- j < outputs.length - 1 ? "," : "" %>
                     <%_   } _%>
                     <%_ } _%>
-                ]
+                ][index]
             },
             icon: "<%- icon %>",
             label: function() {
@@ -114,7 +114,7 @@
                     types: <%- JSON.stringify(param.types) %>,
                     defaultType: "<%- param.defaultType %>",
                     defaultValue: "<%- param.defaultValue %>",
-                    required: null
+                    required: <%- param.required %>
                 }, this)
                 <%_     } _%>
                 <%_   } _%>
@@ -140,7 +140,7 @@
                     types: <%- JSON.stringify(param.types) %>,
                     defaultType: "<%- param.defaultType %>",
                     defaultValue: "<%- param.defaultValue %>",
-                    required: null
+                    required: <%- param.required %>
                 }, this)
                 <%_     } _%>
                 <%_   } _%>

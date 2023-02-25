@@ -57,7 +57,8 @@
                     "placeholder__ja":"出力パラメータ1",
                     "types":["msg", "flow"],
                     "defaultType":"msg",
-                    "defaultValue":"payload1_1"
+                    "defaultValue":"payload1_1",
+                    "required":true
                 }
             ]
         },
@@ -77,7 +78,8 @@
                     "placeholder__ja":"出力パラメータ1",
                     "types":["msg", "flow"],
                     "defaultType":"msg",
-                    "defaultValue":"payload2_1"
+                    "defaultValue":"payload2_1",
+                    "required":true
                 },
                 {
                     "name":"output2",
@@ -89,7 +91,8 @@
                     "placeholder__ja":"出力パラメータ2",
                     "types":["msg", "flow"],
                     "defaultType":"msg",
-                    "defaultValue":"payload2_2"
+                    "defaultValue":"payload2_2",
+                    "required":true
                 }
             ]
         }
