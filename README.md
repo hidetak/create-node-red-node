@@ -14,7 +14,7 @@ Node-REDノードの作成方法については以下が参考になるかと思
 * プロパティ画面のラベルなどの文字列は多言語化できます(現状はen-USとjaのみ)
 * configノードを利用できます(configノードのテンプレートも一緒に出力します)
 
-![props-with-comments](./img/props-with-comments.png)
+![props-with-comments](https://github.com/hidetak/create-node-red-node/blob/main/img/props-with-comments.png?raw=true)
 
 ## 使い方
 
@@ -103,7 +103,9 @@ JSONファイルで、ノードモジュールのパッケージ定義や、ノ�
 ### 入力パラメータの取得元を指定可能  
 
 ノードのプロパティ画面で、パラメータの入力元を選択できます。入力されたデータは、`node.inParams_<変数名>`で取得できますので、ユーザーはこの値を使ってプログラムを記載してください。入力元は複数指定することもできます(以下にプロパティ画面の例を示します)。
-  ![in-param-props](./img/in-param-props.png)
+
+![in-param-props](https://github.com/hidetak/create-node-red-node/blob/main/img/in-param-props.png?raw=true)
+
 選択されたパラメータのデータは、ノードへのinputイベントが発生した際に、`node.inParams_<パラメータ名>`に格納します。適宜、利用して処理を記述してください。
 
 JSONファイルの定義の仕方を以下に示します。
@@ -133,7 +135,9 @@ JSONファイルの定義の仕方を以下に示します。
 ### 出力パラメータの保存先を指定可能    
 
 ノードのプロパティ画面で、パラメータの出力先を選択できます(以下にプロパティ画面の例を示します)。
-![out-param-props](./img/out-param-props.png)
+
+![out-param-props](https://github.com/hidetak/create-node-red-node/blob/main/img/out-param-props.png?raw=true)
+
 ノードへのinputイベントをトリガーとする処理で、選択された出力先にデータを格納するには以下のように定義します。  
 ```
   setOutput(
