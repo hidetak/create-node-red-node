@@ -12,9 +12,9 @@
   "node-red": {
     "nodes": {
       <%_ if( config ) { _%>
-      "normal-config": "dist/<%- config.nodeType %>.js",
+      "<%- config.nodeType %>": "dist/<%- config.nodeType %>.js",
       <%_ } _%>
-      "normal-node": "dist/<%- nodeType %>.js"
+      "<%- nodeType %>": "dist/<%- nodeType %>.js"
     }
   },
   "dependencies": {

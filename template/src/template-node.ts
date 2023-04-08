@@ -17,9 +17,9 @@ module.exports = function (RED) {
       <%_ if(input && input.params) { _%>
       <%_   for(const param of input.params) { _%>
       node.inParams_<%- param.name %> = node.credentials.inParams_<%- param.name %>
-      if (node.inParams_<%- param.name %>) {
+      if (config.inParams_<%- param.name %>ConstValue && config.inParams_<%- param.name %>Type) {
         node.inParams_<%- param.name %> = RED.util.evaluateNodeProperty(
-          node.inParams_<%- param.name %>,
+          config.inParams_<%- param.name %>ConstValue,
           config.inParams_<%- param.name %>Type,
           node,
           msg
@@ -72,7 +72,11 @@ module.exports = function (RED) {
   }
   RED.nodes.registerType('<%- nodeType %>', <%- nodeName %>, {
     credentials: {
-      inParams_inputParam1: { type: 'text' }
+      <%_ if(input && input.params) { _%>
+      <%_   for(let i = 0; i < input.params.length; i++) { _%>
+      inParams_<%- input.params[i].name %>: { type: 'text' }<%- i < input.params.length - 1 ? "," : "" %>
+      <%_   } _%>
+      <%_ } _%>
     }
   })
 
