@@ -100,8 +100,14 @@ var rename = function (outputDirName, defFileName) {
     var def = JSON.parse(defStr);
     for (var beforePath in def) {
         if (fs_1.default.existsSync("".concat(outputDirName, "/").concat(beforePath))) {
-            fs_1.default.renameSync("".concat(outputDirName, "/").concat(beforePath), "".concat(outputDirName, "/").concat(def[beforePath]));
-            console.log("rename ".concat(outputDirName, "/").concat(beforePath, " => ").concat(outputDirName, "/").concat(def[beforePath]));
+            if (def[beforePath] === "remove") {
+                fs_1.default.unlinkSync("".concat(outputDirName, "/").concat(beforePath));
+                console.log("remove ".concat(outputDirName, "/").concat(beforePath));
+            }
+            else {
+                fs_1.default.renameSync("".concat(outputDirName, "/").concat(beforePath), "".concat(outputDirName, "/").concat(def[beforePath]));
+                console.log("rename ".concat(outputDirName, "/").concat(beforePath, " => ").concat(outputDirName, "/").concat(def[beforePath]));
+            }
         }
         else {
             console.log("skip ".concat(outputDirName, "/").concat(beforePath));

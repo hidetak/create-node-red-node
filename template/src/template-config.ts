@@ -6,9 +6,9 @@ module.exports = function (RED) {
 
     <%_ for(const setting of config.settings) { _%>
     node.<%- setting.name %> = node.credentials.<%- setting.name %>
-    if (node.<%- setting.name %>) {
+    if (node.<%- setting.name %>ConstValue && node.<%- setting.name %>Type) {
       node.<%- setting.name %> = RED.util.evaluateNodeProperty(
-        node.<%- setting.name %>,
+        config.<%- setting.name %>ConstValue,
         config.<%- setting.name %>Type,
         node
       )
