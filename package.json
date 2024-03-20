@@ -1,6 +1,6 @@
 {
   "name": "@hidetak/create-node-red-node",
-  "version": "0.0.1-beta.9",
+  "version": "0.1.0-beta.1",
   "description": "",
   "repository": {
     "type": "git",
@@ -14,6 +14,7 @@
     "build": "tsc && npm run copy:dist2bin",
     "copy:dist2bin": "node -e \"require('fs-extra').copySync('./dist', './bin')\"",
     "build:node": "tsc && node dist/index out-node/ node-gen-config.json template/",
+    "publish:beta": "npm publish --tag beta --tag latest",
     "deprecated_build:node": "ejs-cli --base-dir template/ '**/*.*' --out out-node/ -O node-gen-config.json"
   },
   "author": "hidetak",

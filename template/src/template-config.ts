@@ -5,8 +5,7 @@ module.exports = function (RED) {
     const node = this
 
     <%_ for(const setting of config.settings) { _%>
-    node.<%- setting.name %> = node.credentials.<%- setting.name %>
-    if (node.<%- setting.name %>ConstValue && node.<%- setting.name %>Type) {
+    if (config.<%- setting.name %>ConstValue && config.<%- setting.name %>Type) {
       node.<%- setting.name %> = RED.util.evaluateNodeProperty(
         config.<%- setting.name %>ConstValue,
         config.<%- setting.name %>Type,
@@ -16,12 +15,6 @@ module.exports = function (RED) {
     <%_ } _%>
   }
 
-  RED.nodes.registerType("<%- config.nodeType %>", <%- config.nodeName %>, {
-    credentials: {
-      <%_ for(let i = 0; i < config.settings.length; i++) { _%>
-      <%- config.settings[i].name %>: { type: 'text' }<%- i < config.settings.length - 1 ? "," : "" %>
-      <%_ } _%>
-    }
-  })
+  RED.nodes.registerType("<%- config.nodeType %>", <%- config.nodeName %>)
 }
 <%_ } _%>

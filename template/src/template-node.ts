@@ -16,7 +16,6 @@ module.exports = function (RED) {
       // 入力パラメータを取得
       <%_ if(input && input.params) { _%>
       <%_   for(const param of input.params) { _%>
-      node.inParams_<%- param.name %> = node.credentials.inParams_<%- param.name %>
       if (config.inParams_<%- param.name %>ConstValue && config.inParams_<%- param.name %>Type) {
         node.inParams_<%- param.name %> = RED.util.evaluateNodeProperty(
           config.inParams_<%- param.name %>ConstValue,
@@ -70,15 +69,7 @@ module.exports = function (RED) {
       done()
     })
   }
-  RED.nodes.registerType('<%- nodeType %>', <%- nodeName %>, {
-    credentials: {
-      <%_ if(input && input.params) { _%>
-      <%_   for(let i = 0; i < input.params.length; i++) { _%>
-      inParams_<%- input.params[i].name %>: { type: 'text' }<%- i < input.params.length - 1 ? "," : "" %>
-      <%_   } _%>
-      <%_ } _%>
-    }
-  })
+  RED.nodes.registerType('<%- nodeType %>', <%- nodeName %>)
 
   const setOutput = (type, valueName, msg, context, value) => {
     if (type === 'msg') {

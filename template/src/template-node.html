@@ -4,7 +4,6 @@
         <%_ if(config) { _%>
         <%_   varConfigNodeName = config.nodeName[0].toLowerCase() + config.nodeName.substring(1) _%>
         <%_ } _%>
-
         RED.nodes.registerType('<%- nodeType %>', {
             category: "<%- category %>",
             color: "<%- color %>",
@@ -13,10 +12,12 @@
                 <%_ if(input && input.params) { _%>
                 <%_   for(const param of input.params) { _%>
                 inParams_<%- param.name %>Type: {
-                    value: "<%- param.defaultType %>"
+                    value: "<%- param.defaultType %>",
+                    required: <%- param.required %>
                 },
                 inParams_<%- param.name %>ConstValue: {
-                    value: "<%- param.defaultValue %>"
+                    value: "<%- param.defaultValue %>",
+                    required: <%- param.required %>
                 },
                 <%_   } _%>
                 <%_ } _%>
@@ -32,19 +33,11 @@
                 <%_     } _%>
                 <%_   } _%>
                 <%_ } _%>
-
                 <%_ if(config) { _%>
                 <%- varConfigNodeName %>: {
                     type: "<%- config.nodeType %>",
                     required: true
                 }
-                <%_ } _%>
-            },
-            credentials: {
-                <%_ if(input && input.params) { _%>
-                <%_   for(const param of input.params) { _%>
-                inParams_<%- param.name %>: {type: "text"},
-                <%_   } _%>
                 <%_ } _%>
             },
             inputs:<%- input ? 1 : 0 %>,
@@ -91,13 +84,12 @@
 
                 // 入力パラメータの指定項目作成
                 <%_   for(const param of input.params) { _%>
-                prepareInOutParamSetting("inParams", {
-                    name:"<%- param.name %>",
-                    types: <%- JSON.stringify(param.types) %>,
+                $("#node-input-inParams_<%- param.name %>ConstValue").typedInput({
                     defaultType: "<%- param.defaultType %>",
                     defaultValue: "<%- param.defaultValue %>",
-                    required: <%- param.required %>
-                }, this)
+                    types: <%- JSON.stringify(param.types) %>,
+                    typeField: "#node-input-inParams_<%- param.name %>Type",
+                })
                 <%_   } _%>
                 <%_ } _%>
                 
@@ -109,78 +101,17 @@
                 });
                 // 出力パラメータの指定項目作成
                 <%_     for(const param of outputs[i].params) { _%>
-                prepareInOutParamSetting("outParams<%- i+1 %>", {
-                    name: "<%- param.name %>",
-                    types: <%- JSON.stringify(param.types) %>,
+                $("#node-input-outParams<%- i+1 %>_<%- param.name %>ConstValue").typedInput({
                     defaultType: "<%- param.defaultType %>",
                     defaultValue: "<%- param.defaultValue %>",
-                    required: <%- param.required %>
-                }, this)
-                <%_     } _%>
-                <%_   } _%>
-                <%_ } _%>
-            },
-            oneditsave: function() {
-                <%_ if(input) { _%>
-                <%_   for(const param of input.params) { _%>
-                saveInOutParamSetting("inParams", {
-                    name:"<%- param.name %>",
                     types: <%- JSON.stringify(param.types) %>,
-                    defaultType: "<%- param.defaultType %>",
-                    defaultValue: "<%- param.defaultValue %>",
-                    required: <%- param.required %>
-                }, this)
-                <%_   } _%>
-                <%_ } _%>
-                <%_ if(outputs) { _%>
-                <%_   for(let i = 0; i < outputs.length; i++) { _%>
-                <%_     for(const param of outputs[i].params) { _%>
-                saveInOutParamSetting("outParams<%- i+1 %>", {
-                    name: "<%- param.name %>",
-                    types: <%- JSON.stringify(param.types) %>,
-                    defaultType: "<%- param.defaultType %>",
-                    defaultValue: "<%- param.defaultValue %>",
-                    required: <%- param.required %>
-                }, this)
+                    typeField: "#node-input-outParams<%- i+1 %>_<%- param.name %>Type",
+                })
                 <%_     } _%>
                 <%_   } _%>
                 <%_ } _%>
             }
         });
-        const prepareInOutParamSetting = (inOrOutParams, params, _this) => {
-            const {name, types, defaultType, defaultValue, required} = params
-            const varName = `${inOrOutParams}_${name}`
-            if (!_this[`${varName}Type`]) {
-                _this[`${varName}Type`] = defaultType
-            }
-            if(this[`${varName}Type`] == 'str') {
-                $(`#node-input-${varName}ConstValue`).val("")
-            } else {
-                if(_this[`${varName}ConstValue`] == "") {
-                    $(`#node-input-${varName}ConstValue`).val(_this.credentials[varName]);
-                } else {
-                    _this.credentials[varName] = _this[`${varName}ConstValue`];
-                    $(`#node-input-${varName}`).val(_this.credentials[`${varName}`]);
-                }
-            }
-            $(`#node-input-${varName}Type`).val(_this[`${varName}Type`])
-            $(`#node-input-${varName}`).typedInput({
-                default: defaultType,
-                typeField: $(`#node-input-${varName}Type`),
-                types: types
-            })
-            $(`#node-input-${varName}`).typedInput('type', _this[`${varName}Type`])
-        }
-        const saveInOutParamSetting = (inOrOutParams, params, _this) => {
-            const varName = `${inOrOutParams}_${params.name}`
-            if($(`#node-input-${varName}Type`).val() != 'str') {
-                _this[`${varName}ConstValue`] = $(`#node-input-${varName}`).val()
-                $(`#node-input-${varName}ConstValue`).val(_this[`${varName}ConstValue`])
-            } else {
-                $(`#node-input-${varName}ConstValue`).val("")
-                _this[`${varName}ConstValue`] = ''
-            }
-        }
     })();
 
 </script>
@@ -214,10 +145,9 @@
             <%_ if(input) { _%>
             <%_   for(const param of input.params) { _%>
             <div class='form-row'>
-                <label for='node-input-inParams_<%- param.name %>'><span data-i18n="editor.inParams.<%- param.name %>.label"></span></label>
-                <input required type='text' id='node-input-inParams_<%- param.name %>' data-i18n="[placeholder]editor.inParams.<%- param.name %>.placeholder">
+                <label for='node-input-inParams_<%- param.name %>ConstValue'><span data-i18n="editor.inParams.<%- param.name %>.label"></span></label>
+                <input type='text' id='node-input-inParams_<%- param.name %>ConstValue' data-i18n="[placeholder]editor.inParams.<%- param.name %>.placeholder">
                 <input type='hidden' id='node-input-inParams_<%- param.name %>Type'>
-                <input type='hidden' id='node-input-inParams_<%- param.name %>ConstValue'>
             </div>
             <%_   } _%>
             <%_ } _%>
@@ -228,10 +158,9 @@
         <div id="tab-outParams<%- i+1 %>-settings">
             <%_     for(const param of outputs[i].params) { _%>
             <div class='form-row'>
-                <label for='node-input-outParams<%- i+1 %>_<%- param.name %>'><span data-i18n="editor.outParams<%- i+1 %>.<%- param.name %>.label"></span></label>
-                <input required type='text' id='node-input-outParams<%- i+1 %>_<%- param.name %>' data-i18n="[placeholder]editor.outParams<%- i+1 %>.<%- param.name %>.placeholder">
+                <label for='node-input-outParams<%- i+1 %>_<%- param.name %>ConstValue'><span data-i18n="editor.outParams<%- i+1 %>.<%- param.name %>.label"></span></label>
+                <input type='text' id='node-input-outParams<%- i+1 %>_<%- param.name %>ConstValue' data-i18n="[placeholder]editor.outParams<%- i+1 %>.<%- param.name %>.placeholder">
                 <input type='hidden' id='node-input-outParams<%- i+1 %>_<%- param.name %>Type'>
-                <input type='hidden' id='node-input-outParams<%- i+1 %>_<%- param.name %>ConstValue'>
             </div>
             <%_     } _%>
         </div>
